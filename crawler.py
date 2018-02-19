@@ -5,6 +5,36 @@ from bs4 import BeautifulSoup
 CEPURL = "http://www.buscacep.correios.com.br/sistemas/buscacep/resultadoBuscaCepEndereco.cfm?t"
 
 
+ESTADOSBR = {
+    "AC": "Acre",
+    "AL": "Alagoas",
+    "AP": "Amapá",
+    "AM": "Amazonas",
+    "BA": "Bahia",
+    "CE": "Ceará",
+    "DF": "Distrito Federal",
+    "ES": "Espírito Santo",
+    "GO": "Goiás",
+    "MA": "Maranhão",
+    "MT": "Mato Grosso",
+    "MS": "Mato Grosso do Sul",
+    "MG": "Minas Gerais",
+    "PA": "Pará",
+    "PB": "Paraíba",
+    "PR": "Paraná",
+    "PE": "Pernambuco",
+    "PI": "Piauí",
+    "RJ": "Rio de Janeiro",
+    "RN": "Rio Grande do Norte",
+    "RS": "Rio Grande do Sul",
+    "RO": "Rondônia",
+    "RR": "Roraima",
+    "SC": "Santa Catarina",
+    "SP": "São Paulo",
+    "SE": "Sergipe",
+    "TO": "Tocantins"
+}
+
 def cep_retrieve(cep):
     response = requests.post(CEPURL, data = {
         "relaxation": cep,
@@ -49,7 +79,8 @@ def cep_extract(html):
             'logradouro': colunas[0].text.strip(),
             'bairro': colunas[1].text.strip(),
             'cidade': cidade.strip(),
-            'estado': estado.strip(),
+            'estado': ESTADOSBR.get(estado.strip()),
+            'uf': estado.strip(),
             'cep': colunas[3].text.replace('-', '').strip()
         }
 
