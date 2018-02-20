@@ -13,7 +13,7 @@ def cep_route(cep_to_find):
         return jsonify(cep_to_find)
 
     except NotFoundException as ee:
-        return jsonify({}), 400
+        return jsonify({}), 404
     except Exception as ex:
         return ex, 500
 
