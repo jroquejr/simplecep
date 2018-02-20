@@ -35,6 +35,10 @@ ESTADOSBR = {
     "TO": "Tocantins"
 }
 
+
+class NotFoundException(Exception):
+    pass
+
 def cep_retrieve(cep):
     response = requests.post(CEPURL, data = {
         "relaxation": cep,
@@ -58,7 +62,7 @@ def cep_extract(html):
     linhas = soup.select('.tmptabela tr')
 
     if len(linhas) <= 1:
-        return None
+        raise NotFoundException("Deu Ruim")
 
     linhas = linhas[1:]
 
